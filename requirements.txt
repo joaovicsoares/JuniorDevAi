@@ -1,0 +1,20 @@
+# ── Runtime ──────────────────────────────────────────────────────────────
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+pydantic>=2.0
+pydantic-settings>=2.0
+
+# ── Database (uncomment when needed) ─────────────────────────────────────
+# sqlalchemy>=2.0
+# aiosqlite
+# alembic
+
+# ── AI SDKs (uncomment the ones you need) ────────────────────────────────
+# openai
+# anthropic
+# httpx            # for custom AI API calls
+
+# ── Dev / Testing ────────────────────────────────────────────────────────
+# pytest
+# pytest-asyncio
+# httpx            # for TestClient async support
