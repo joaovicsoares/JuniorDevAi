@@ -16,7 +16,7 @@ class Settings(BaseSettings):
     ALLOWED_ORIGINS: list[str] = ["*"]
 
     # ── Database (ready for when you add one) ───────────────────────────
-    DATABASE_URL: str = "sqlite+aiosqlite:///./dev.db"
+    DATABASE_URL: str = "postgresql+asyncpg://postgres:postgres@db:5432/juniordevai"
 
     # ── AI Service keys (examples) ──────────────────────────────────────
     OPENAI_API_KEY: str = ""

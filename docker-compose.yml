@@ -4,6 +4,33 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: juniordevai-api
+    environment:
+      DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/juniordevai
+    depends_on:
+      db:
+        condition: service_healthy
     ports:
       - "8000:8000"
     restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  db:
+    image: postgres:17-alpine
+    container_name: juniordevai-db
+    environment:
+      POSTGRES_DB: juniordevai
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d juniordevai"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

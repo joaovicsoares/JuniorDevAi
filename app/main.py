@@ -4,6 +4,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.v1.router import api_v1_router
 from app.core.config import settings
 from app.core.middleware import register_middleware
+from app.db.session import Base, engine
+from app.models import RepositoryRecord
 
 
 def create_app() -> FastAPI:
@@ -31,6 +33,11 @@ def create_app() -> FastAPI:
 
     # ── Routers ─────────────────────────────────────────────────────────
     app.include_router(api_v1_router, prefix="/api/v1")
+
+    @app.on_event("startup")
+    async def startup() -> None:
+        async with engine.begin() as connection:
+            await connection.run_sync(Base.metadata.create_all)
 
     return app
 
